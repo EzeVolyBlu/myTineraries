@@ -1,0 +1,11 @@
+.App {
+    margin: auto;
+    margin-top: 10px;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 40px;
+    background-color: black;
+}
