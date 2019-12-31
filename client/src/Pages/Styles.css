@@ -1,0 +1,9 @@
+.scroll {
+    height:600px;
+    overflow-y: scroll;
+}
+
+.title {
+    width: 100%;
+    text-align: center;
+}
