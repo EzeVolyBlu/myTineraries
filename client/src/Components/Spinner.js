@@ -5,7 +5,7 @@ const Loading = (props) => {
     return (
 
 
-            <Spinner className="align-self-center" style={{ width: '3rem', height: '3rem' }} />
+            <Spinner className="align-self-center align-spinner" style={{ width: '3rem', height: '3rem' }} />
 
     );
 }

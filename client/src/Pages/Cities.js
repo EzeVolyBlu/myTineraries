@@ -59,12 +59,12 @@ class Cities extends Component {
 
                 
 
-                <h2 className="title"> Cities </h2>
+                <h2 className="title mb-auto mt-4"> Cities </h2>
 
 
 
                 {(this.props.citiesReducer.isFetching ? 
-                    <Loading className="d-flex justify-content-center"/> : 
+                    <Loading className="align-spinner"/> : 
                     
                     <div className="col scroll w-100 ">
                         {(filteredCities.map(city => { return <City city={city} key={city._id} />}) )}
