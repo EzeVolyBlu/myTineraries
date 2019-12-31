@@ -14,10 +14,21 @@ router.get('/all',
             .then(files => {
                 res.send(files)
             })
-            .catch(err => console.log(err));
+            .catch(err => res.send(err));
     });
 
+/*get city*/
+router.get('/:name',
+    (req, res) => {
+        let cityRequested = req.params.name;
+        cityModel.find({name: cityRequested})
+            .then(city => {
+                res.send(city)
+            })
+            .catch(err => res.send(err));
+    });
 
+/*post city*/
 router.post('/', (req, res) => {
     const newCity = new cityModel({
         name: req.body.name,

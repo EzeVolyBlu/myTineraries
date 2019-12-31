@@ -23,3 +23,22 @@
 .align-spinner {
     margin-left: 210px;
 }
+
+.link-style-card {
+    text-decoration: none;
+    color: black;
+}
+
+.link-style-card:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.carg-img {
+    width:100%;
+}
+
+.fix-margin {
+    margin-right: 0px;
+    margin-left: 0px;
+}
