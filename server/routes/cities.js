@@ -18,10 +18,10 @@ router.get('/all',
     });
 
 /*get city*/
-router.get('/:name',
+router.get('/:id',
     (req, res) => {
-        let cityRequested = req.params.name;
-        cityModel.find({name: cityRequested})
+        let cityRequested = req.params.id;
+        cityModel.findById(cityRequested)
             .then(city => {
                 res.send(city)
             })

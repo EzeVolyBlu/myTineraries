@@ -25,6 +25,7 @@ app.listen(port, () => {
 //Routes
 app.use('/cities', require('./routes/cities'));
 app.use('/itineraries', require('./routes/itineraries'));
+app.use('/users', require('./routes/users'));
 
 mongoose.connect(db, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
   .then(() => console.log('Connection to Mongo DB established'))

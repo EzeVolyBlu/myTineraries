@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Input } from 'reactstrap';
 import City from '../Components/City';
 import Loading from '../Components/Spinner';
+import Navbar from '../Components/Navbar';
+import Home from '../Components/Home'
+
 
 // import Search from '../Components/Search'
 import './Styles.css'
@@ -55,23 +58,26 @@ class Cities extends Component {
         
 
         return (
-            <div className="mobile container row align-items-end">
+            <div className="mb-auto h-100 d-flex flex-column justify-content-between">
+
 
                 
 
-                <h2 className="title mb-auto mt-4"> Cities </h2>
+                <h2 className="title mt-4"> Cities </h2>
 
 
+                {(this.props.citiesReducer.didInvalidate ? 
+                    <h3 className="mx-auto">No results found</h3> : 
+                    this.props.citiesReducer.isFetching ? 
+                        <Loading className="align-spinner "/> : 
+                        
+                        <div className="col scroll w-100 ">
+                            {(filteredCities.map(city => { return <City city={city} key={city._id} />}) )}
+                        </div>
+                    )}
 
-                {(this.props.citiesReducer.isFetching ? 
-                    <Loading className="align-spinner"/> : 
-                    
-                    <div className="col scroll w-100 ">
-                        {(filteredCities.map(city => { return <City city={city} key={city._id} />}) )}
-                    </div>
-                     
-                )}
-                
+                <div className="row mx-0 p-1">
+
                 <Input
                     type="search"
                     name="search"
@@ -79,8 +85,10 @@ class Cities extends Component {
                     placeholder="Filter by name..."
                     value={this.state.search}
                     onChange = {this.updateSearch.bind(this)}
-                    className="mt-4"
+                    className="my-2"
                 />
+                </div>
+
 
                 
 

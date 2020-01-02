@@ -1,14 +1,17 @@
 import {
     INVALIDATE_REQ,
     REQUEST_ITINERARIES,
-    RECEIVE_ITINERARIES
+    RECEIVE_ITINERARIES,
+    RECEIVE_CITY_NAME,
+    RECEIVE_USER
 } from '../actions/itineraryActions'
 
 export default function itineraries(
     state = {
         isFetching: true,
         didInvalidate: false,
-        itineraries: []
+        itineraries: [],
+        cityName: '',
     },
     action
 ) {
@@ -31,6 +34,14 @@ export default function itineraries(
                 itineraries: action.itineraries,
                 // lastUpdated: action.receivedAt
             })
+
+        case RECEIVE_CITY_NAME:
+            return Object.assign({}, state, {
+                // lastUpdated: action.receivedAt
+                cityName: action.cityName
+            })
+
+        
         default:
             return state
     }

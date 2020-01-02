@@ -8,13 +8,12 @@ function requestCities() {
   }
 }
 
-export const RECEIVE_CITIES = 'RECEIVE_CITIES'
-function receiveCities(res) {
-
+export const RECEIVE_USER = 'RECEIVE_USER'
+function receiveUser(res) {
 
   return {
-    type: RECEIVE_CITIES,
-    cities: res.data
+    type: RECEIVE_USER,
+    user: res.data
   }
 }
 export const INVALIDATE_REQ = 'INVALIDATE_REQ'
@@ -27,27 +26,39 @@ export function invalidateReq(error) {
 
 
 
-export default function fetchCities() {
+export default function getUsers(itineraries) {
 
   return function (dispatch) {
 
-    dispatch(requestCities())
+    // dispatch(requestCities())
+    let usersNames = []
+    itineraries.map(it => {
 
-    return axios.get('http://localhost:5000/cities/all')
+      axios.get(`http://localhost:5000/users/${it.userId}`)
       .then(function (response) {
         // handle success
-        dispatch(receiveCities(response))
+        dispatch(receiveUser(response))
+        console.log("response", response)
+        usersNames.push(response)
 
       })
       .catch(function (error) {
         // handle error
-        dispatch(invalidateReq(error))
+        // dispatch(invalidateReq(error))
 
         console.log(error);
       })
       .finally(function () {
       });
 
+
+    })
+
+
+    
+    /*
+    return 
+*/
 
 
 

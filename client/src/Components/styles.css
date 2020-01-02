@@ -42,3 +42,15 @@
     margin-right: 0px;
     margin-left: 0px;
 }
+
+.img-width {
+    width: 400px;
+}
+
+.link-pointer:hover{
+    cursor: pointer;
+}
+
+.home-ico {
+    width: 75px;
+}

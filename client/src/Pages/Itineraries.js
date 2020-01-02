@@ -6,35 +6,57 @@ import Itinerary from '../Components/Itinerary';
 
 import fetchItineraries from "../store/actions/itineraryActions";
 
+// import getUsers from "../store/actions/usersActions";
+
+
 
 class Itineraries extends Component {
 
     constructor(props) {
         super(props)
 
-        this.state = { cityId: this.props.match.params.cityId }
+        this.state = { 
+            cityId: this.props.match.params.cityId, 
+        }
     }
 
 
     componentDidMount() {
 
-        this.props.fetchItineraries(this.state.cityId)
+        this.props.fetchItineraries(this.state.cityId);
+
 
     }
 
+    
+
 
     render() {
+
+        console.log('this.props',this.props)
+        
         const { itineraries } = this.props.itinerariesReducer
-        console.log('itineraries', itineraries)
+
+        
+
         return (
-            <div className="mobile">
+            <div className="mb-auto h-100 d-flex flex-column justify-content-between">
+
+                <h2 className="title mt-4"> {this.props.itinerariesReducer.cityName} </h2>
+
 
                 {(this.props.itinerariesReducer.isFetching ?
-                    <Loading className="align-spinner" /> :
+                    <Loading className="align-spinner " /> :
 
-                    <div className="col scroll w-100 ">
+                    (itineraries.length === 0) ? 
+                    <h3 className="my-auto text-center">No itineraries added</h3> :
+
+                    <div className="scroll flex-column px-2">
+                        <h5 className="mx-2">Avalaible MYtineraries</h5>
+
                         {(itineraries.map(
                             itinerary => {
+
                                 return (<Itinerary
                                     itinerary={itinerary}
                                     key={itinerary._id}
@@ -42,7 +64,6 @@ class Itineraries extends Component {
                             }
                         )
                         )}
-                        Itineraries
                     </div>
 
                 )}
@@ -54,7 +75,9 @@ class Itineraries extends Component {
 
 const mapStateToProps = state => {
     return {
-        itinerariesReducer: state.itinerariesReducer
+        itinerariesReducer: state.itinerariesReducer,
+        // usersReducer: state.usersReducer
+
     }
 }
 
@@ -63,7 +86,9 @@ const mapDispatchToProps = dispatch => {
 
 
     return {
-        fetchItineraries: (cityId) => dispatch(fetchItineraries(cityId))
+        fetchItineraries: (cityId) => dispatch(fetchItineraries(cityId)),
+        // getUsers: (itineraries) => dispatch(getUsers(itineraries))
+
     }
 }
 

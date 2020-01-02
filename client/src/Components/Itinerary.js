@@ -1,47 +1,81 @@
 // // import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import image from '../img/GaudiLover.png'
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
+import ItCarousel from '../Components/Carousel'
+import Comments from '../Components/Comments'
 
 
 import { Collapse, Button, CardBody, Card } from 'reactstrap';
 
 
 
+class Itinerary extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      isOpen: false,
+      users: []
+    }
+  }
 
 
-const Itinerary = (props) => {
+  getUsers = async () => {
+    let res = await axios.get(`http://localhost:5000/users/${this.props.itinerary.userId}`);
+    console.log('res.data',res.data)
+    let { name, image } = res.data;
+    console.log('name',name)
+    console.log('image',image)
 
-  const [isOpen, setIsOpen] = useState(false);
+    this.setState({ users: {name, image} });
+  };
 
-  const toggle = () => setIsOpen(!isOpen);
+  componentDidMount(){
+
+    this.getUsers()
+
+
+  }
+
+
+
+
+
+  render () {
+
+  const toggle = () => this.setState({isOpen: !this.state.isOpen});
+
+  console.log('this.state',this.state)
 
   return (
 
-    <div className="my-4 col border border-secondary rounded p-0">
+    <div className="my-2 col border border-secondary rounded p-0">
 
       <div className="row fix-margin pt-2">
 
         <div className="col-3 px-2">
           <img width="100%" src={image} alt="profile" className="carg-img" />
-          <p className="text-center">UserName</p>
+          <p className="text-center">{this.state.users.name}</p>
         </div>
 
         <div className="col-9 p-0">
-          <h4 className="mt-1 mx-1">{props.itinerary.title}</h4>
+          <h4 className="mt-1 mx-1">{this.props.itinerary.title}</h4>
 
           <div className="row mx-1">
 
             <div className="col-3 p-0">
-              <p>Likes: {props.itinerary.rating}</p>
+              <p>Likes: {this.props.itinerary.rating}</p>
             </div>
 
             <div className="col-5 p-0">
-              <p>Duration: {props.itinerary.duration}</p>
+              <p>Duration: {this.props.itinerary.duration}</p>
             </div>
 
             <div className="col-4 p-0">
-              <p>Price: $ {props.itinerary.price} </p>
+              <p>Price: $ {this.props.itinerary.price} </p>
             </div>
 
 
@@ -49,8 +83,8 @@ const Itinerary = (props) => {
           <div className="row mx-1">
 
 
-            {props.itinerary.hashtags.map(it => {
-              return <p className="mx-1"> {it}</p>
+            {this.props.itinerary.hashtags.map((it, index) => {
+              return <p className="mx-1" key={index}> {it}</p>
             })}
 
 
@@ -76,21 +110,29 @@ const Itinerary = (props) => {
           </Collapse>
         </Navbar>
  */}
-      <Collapse isOpen={isOpen}>
-        <Card>
-          <h6 className="m-2">Activities</h6>
-          <CardBody>
-          </CardBody>
-        </Card>
-      </Collapse>
+        <Collapse isOpen={this.state.isOpen}>
+          <Card className="border-0">
+            <h6 className="m-2 px-1">Activities</h6>
+            <CardBody>
 
-      <Button 
-        className="mb-0 w-100" 
-        color="primary" 
-        onClick={toggle} 
-        style={{ marginBottom: '1rem' }}
+              <ItCarousel />
+
+
+
+            </CardBody>
+
+            <Comments />
+
+          </Card>
+        </Collapse>
+
+        <Button
+          className="mb-0 w-100"
+          color="primary"
+          onClick={toggle}
+          style={{ marginBottom: '1rem' }}
         >
-          {(isOpen ? 'Close' : 'View All')}
+          {(this.state.isOpen ? 'Close' : 'View All')}
         </Button>
 
 
@@ -105,6 +147,11 @@ const Itinerary = (props) => {
 
 
   );
+
+}
+
+
+  
 };
 
 export default Itinerary;

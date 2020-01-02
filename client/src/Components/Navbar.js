@@ -11,7 +11,7 @@ const NavBar = (props) => {
   const toggleNavbar = () => setCollapsed(!collapsed);
 
   return (
-    <div>
+    <div className="w-100">
       <Navbar color="light" light>
         {/* <NavbarBrand href="/" className="mr-auto">MyTineraries</NavbarBrand> */}
         <UncontrolledDropdown >

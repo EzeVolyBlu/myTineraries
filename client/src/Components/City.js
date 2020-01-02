@@ -9,7 +9,9 @@ import {
 
 const City = (props) => {
 
-  
+
+    
+
   return (
     
     <Link to={`/itineraries/${props.city._id}`} className="link-style-card">
@@ -29,5 +31,7 @@ const City = (props) => {
     
   );
 };
+
+
 
 export default City;

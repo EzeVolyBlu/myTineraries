@@ -7,12 +7,9 @@ import Logo from '../Components/Logo'
 
 export default function Landing() {
     return (
-        <div className="mobile">
-            <Navbar />
+        <div className="mb-auto">
             <Logo />
             <StartBrowsing />
-            
-
         </div>
     )
 }
