@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink, DropdownToggle,
   DropdownMenu,
   DropdownItem, UncontrolledDropdown } from 'reactstrap';
+import { Link } from 'react-router-dom';
+
 
 import './styles.css';
 
@@ -26,7 +28,9 @@ const NavBar = (props) => {
                   Login
                 </DropdownItem>
                 <DropdownItem>
-                  Create Account
+                  <Link to="/create-account">
+                    Create Account
+                  </Link>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>

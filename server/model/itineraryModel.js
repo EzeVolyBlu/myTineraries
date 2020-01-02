@@ -31,6 +31,9 @@ const itinerarySchema = new mongoose.Schema({
         type: ObjectId,
         required: true,
         unique: true
+    },
+    activities: {
+        type: Array
     }
 })
 

@@ -7,29 +7,20 @@ import {
   CarouselCaption
 } from 'reactstrap';
 
-import img1 from '../img/madrid/estacion-atocha.jpg'
-import img2 from '../img/madrid/puerta-alcala.jpg'
-import img3 from '../img/madrid/torres-futuro-madrid.jpg'
 
-const items = [
-  {
-    src: img1,
-    altText: 'Slide 1',
-    caption: 'Slide 1'
-  },
-  {
-    src: img2,
-    altText: 'Slide 2',
-    caption: 'Slide 2'
-  },
-  {
-    src: img3,
-    altText: 'Slide 3',
-    caption: 'Slide 3'
-  }
-];
+
 
 const ItCarousel = (props) => {
+
+  const items = props.carouselData.map((item, index) => {
+    return {
+      src: item.img,
+      altText: `Slide ${index}`,
+      caption: item.name
+    }
+  } )
+
+  
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 
@@ -58,7 +49,7 @@ const ItCarousel = (props) => {
         key={item.src}
       >
         <img src={item.src} alt={item.altText} className="img-width"/>
-        <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+        <CarouselCaption captionText={props.itName} captionHeader={item.caption} />
       </CarouselItem>
     );
   });

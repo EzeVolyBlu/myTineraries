@@ -25,20 +25,26 @@ class Itinerary extends Component {
 
   getUsers = async () => {
     let res = await axios.get(`http://localhost:5000/users/${this.props.itinerary.userId}`);
-    console.log('res.data',res.data)
     let { name, image } = res.data;
-    console.log('name',name)
-    console.log('image',image)
 
     this.setState({ users: {name, image} });
   };
 
   componentDidMount(){
 
-    this.getUsers()
+    this.mounted = true;
+
+    if(this.mounted)
+      this.getUsers()
 
 
   }
+
+  componentWillUnmount(){
+    this.mounted = false;
+
+  }
+
 
 
 
@@ -48,7 +54,6 @@ class Itinerary extends Component {
 
   const toggle = () => this.setState({isOpen: !this.state.isOpen});
 
-  console.log('this.state',this.state)
 
   return (
 
@@ -115,7 +120,9 @@ class Itinerary extends Component {
             <h6 className="m-2 px-1">Activities</h6>
             <CardBody>
 
-              <ItCarousel />
+              <ItCarousel 
+                carouselData={this.props.itinerary.activities} 
+                itName={this.props.itinerary.title}/>
 
 
 

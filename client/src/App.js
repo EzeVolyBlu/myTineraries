@@ -6,6 +6,7 @@ import Itineraries from './Pages/Itineraries'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Home from './Components/Home'
 import Navbar from './Components/Navbar'
+import createNewAccount from './Pages/CreateNewAccount'
 
 function App() {
   return (
@@ -17,9 +18,10 @@ function App() {
           <Route path='/' component={Navbar} />
           <Route exact path='/' component={Landing} />
 
+          <Route path='/create-account' component={createNewAccount} />
           <Route path='/cities' component={Cities} />
           <Route exact path='/itineraries/:cityId' component={Itineraries} />
-          <Route path="/(cities|itineraries)/" component={Home} />
+          <Route path="/(cities|itineraries|create-account)/" component={Home} />
 
         </div>
         {/* <Switch> */}

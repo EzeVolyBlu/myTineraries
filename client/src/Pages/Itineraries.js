@@ -33,7 +33,6 @@ class Itineraries extends Component {
 
     render() {
 
-        console.log('this.props',this.props)
         
         const { itineraries } = this.props.itinerariesReducer
 

@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Input } from 'reactstrap';
 import City from '../Components/City';
 import Loading from '../Components/Spinner';
-import Navbar from '../Components/Navbar';
-import Home from '../Components/Home'
 
 
 // import Search from '../Components/Search'
