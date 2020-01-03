@@ -26,6 +26,39 @@ export function invalidateReq(error) {
 
 
 
+
+export const submitAccount = userData => dispatch => {
+
+  console.log('userData', userData)
+  // dispatch(postUser(userData))
+  axios.post('http://localhost:5000/users', 
+    userData
+  ).then(function (response) {
+        // handle success
+        console.log("response", response)
+
+      })
+      .catch(function (error) {
+        // handle error
+        // dispatch(invalidateReq(error))
+
+        console.log(error);
+      })
+      .finally(function () {
+      });
+
+
+}
+
+export const POST_USER = 'POST_USER'
+export const postUser = error => {
+  return {
+    type: INVALIDATE_REQ,
+    error
+  }
+}
+
+
 export default function getUsers(itineraries) {
 
   return function (dispatch) {

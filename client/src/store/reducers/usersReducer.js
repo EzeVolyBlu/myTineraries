@@ -6,7 +6,8 @@ import {
 
 export default function users(
     state = {
-        users: []
+        users: [],
+        mailExists: false
     },
     action
 ) {

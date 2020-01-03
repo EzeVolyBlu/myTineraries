@@ -14,4 +14,16 @@ router.get('/:userId',
             .catch(err => res.send(err));
     });
 
+router.post('/',
+(req, res) => {
+    let email = req.body.email
+    userModel.find({email})
+        .then(user => {
+            console.log('user',user)
+            res.send(user)
+        })
+        .catch(err => res.send(err));
+});
+
+
 module.exports = router

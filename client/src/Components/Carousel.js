@@ -49,7 +49,7 @@ const ItCarousel = (props) => {
         key={item.src}
       >
         <img src={item.src} alt={item.altText} className="img-width"/>
-        <CarouselCaption captionText={props.itName} captionHeader={item.caption} />
+        <CarouselCaption captionText={''} captionHeader={item.caption} />
       </CarouselItem>
     );
   });
