@@ -1,21 +1,9 @@
 import React, { Component } from 'react'
 import './Landing.css'
-import Navbar from '../Components/Navbar';
-// import '../Components/StartBrowsing'
 import StartBrowsing from '../Components/StartBrowsing'
 import Logo from '../Components/Logo'
 import Carousel from '../Components/Carousel'
-/*
-export default function Landing() {
-    return (
-        <div className="mb-auto">
-            <Logo />
-            <StartBrowsing />
-            <Carousel />
-        </div>
-    )
-}
-*/
+
 import { connect } from "react-redux";
 import  fetchCities  from "../store/actions/cityActions";
 import Loading from '../Components/Spinner';
@@ -24,9 +12,7 @@ import Loading from '../Components/Spinner';
 
 class Landing extends Component {
     
-    constructor(props){
-        super(props)
-    }
+    
 
     componentDidMount(){
 

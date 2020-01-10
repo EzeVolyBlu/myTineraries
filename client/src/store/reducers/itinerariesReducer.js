@@ -3,7 +3,6 @@ import {
     REQUEST_ITINERARIES,
     RECEIVE_ITINERARIES,
     RECEIVE_CITY_NAME,
-    RECEIVE_USER
 } from '../actions/itineraryActions'
 
 export default function itineraries(

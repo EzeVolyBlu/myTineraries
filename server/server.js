@@ -3,6 +3,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 const db = require('./keys').mongoURI;
 const mongoose = require("mongoose");
+require ('./auth/passport');
+const passport = require ('passport')
 
 
 //Middlewares
@@ -16,6 +18,7 @@ app.use(
   })
 );
 app.use(cors());
+app.use(passport.initialize());
 
 //Port listening
 app.listen(port, () => {

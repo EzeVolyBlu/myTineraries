@@ -1,8 +1,8 @@
 // // import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import image from '../img/GaudiLover.png'
-import React, { useState, Component } from 'react';
+// import image from '../img/GaudiLover.png'
+import React, { Component } from 'react';
 import ItCarousel from '../Components/Carousel'
 import Comments from '../Components/Comments'
 
@@ -53,6 +53,10 @@ class Itinerary extends Component {
   render () {
 
   const toggle = () => this.setState({isOpen: !this.state.isOpen});
+  console.log(this.state)
+  const image = this.state.users.image
+  console.log(image)
+  console.log(this.state.users)
 
 
   return (
@@ -62,7 +66,7 @@ class Itinerary extends Component {
       <div className="row fix-margin pt-2">
 
         <div className="col-3 px-2">
-          <img width="100%" src={image} alt="profile" className="carg-img" />
+          <img width="100%" src={image} alt="profile" className="carg-img rounded-circle p-2" />
           <p className="text-center">{this.state.users.name}</p>
         </div>
 

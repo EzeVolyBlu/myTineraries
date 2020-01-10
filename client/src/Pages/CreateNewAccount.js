@@ -1,9 +1,8 @@
 
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
-import  {submitAccount}  from "../store/actions/usersActions";
-// import  {fetchEmail}  from "../store/actions/usersActions";
+import { submitAccount, refreshEmail, refreshPassword, closeAlert, completeFields } from "../store/actions/usersActions";
 
 class CreateNewAccount extends Component {
 
@@ -15,92 +14,112 @@ class CreateNewAccount extends Component {
             userAgree: false,
             name: '',
             email: '',
-            password: ''
-
+            password: '',
         }
     }
+
+
+    componentWillUnmount(){
+        this.props.closeAlert()
+    }
+
 
 
 
     render() {
 
-        const mailExists = false
+        
+
+        const invalidEmail = this.props.usersReducer.invalidEmail
+        const invalidName = this.props.usersReducer.invalidName
+        const invalidPassword = this.props.usersReducer.invalidPassword
+        const alertVisible = this.props.usersReducer.alert.visible
+        const alertColor = this.props.usersReducer.alert.color
+        const alertMessage = this.props.usersReducer.alert.message
 
         const handleInputChange = event => {
+
+            
+
             let name = event.target.name;
             let value = event.target.value;
-            
+
+            if (name === 'email') {
+                this.props.refreshEmail()
+            }else if (name === 'password') {
+                this.props.refreshPassword()
+            }
+
+
             this.setState({
                 [name]: value
             })
         }
 
+
+        const submitValidator = event => {
+            this.props.completeFields(this.state)
+            event.preventDefault();
+
+
+        }
+       
         const handleSubmit = event => {
-            // if(!this.props.mailExists){
 
-                this.props.submitAccount(this.state);
-                event.preventDefault();
-                
-                this.setState({
-                    name: '',
-                    email: '',
-                    image: '',
-                    password: '',
-                    userAgree: false,
-                    avatar: 'https://image.flaticon.com/icons/svg/747/747376.svg'
-                });
 
-            // }
-        }   
+            this.props.submitAccount(this.state);
+            event.preventDefault();
 
-        // const handleChange = e => {
-        //     this.setState({
-        //         avatar: e.target.value
-        //     })
-        // }
+        }
 
-        const userAgree = () =>{
+        const closeAlert = () => {
+            this.props.closeAlert()
+        }
+
+        const userAgree = () => {
             this.setState({
                 userAgree: !this.state.userAgree
             })
         }
-        
+
         return (
+
+
 
             <div className="mb-auto h-100 d-flex flex-column justify-content-between">
 
                 <h2 className="title mt-4"> Create New Account </h2>
 
                 <div className="d-flex justify-content-around mx-auto my-4">
-                    <img className="p-3 rounded-circle avatar"src={this.state.avatar} alt="avatar"/>
-    
+                    <img className="p-3 rounded-circle avatar" src={this.state.avatar} alt="avatar" />
+
                 </div>
 
 
                 <div className="col scroll w-100 ">
 
                     <Form className="px-3 mb-auto mt-4">
-        
-                    
-        
+
+
+
                         <FormGroup>
                             <Label for="exampleEmail">Name</Label>
-        
-                            {(mailExists ?
-                                <Input invalid type="text" name="name" id="exampleEmail" placeholder="Name..." required onChange={handleInputChange} value={this.state.name}/> :
-                                <Input type="text" name="name" id="exampleName" placeholder="Name..." required onChange={handleInputChange} value={this.state.name}/>
-                            )}
-        
+
+                            <Input type="text" name="name" invalid={invalidName} id="exampleName" placeholder="Name..." required onChange={handleInputChange} value={this.state.name} />
+
                         </FormGroup>
                         <FormGroup>
                             <Label for="exampleEmail">Email</Label>
-                            <Input type="email" name="email" id="exampleEmail" placeholder="Email..." required onChange={handleInputChange} value={this.state.email}/>
+
+                            <Input type="email" invalid={invalidEmail} name="email" id="exampleEmail" placeholder="Email..." required onChange={handleInputChange} value={this.state.email} />
+                            
+
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword">Password</Label>
-                            <Input type="password" name="password" id="examplePassword" placeholder="Password..." required  onChange={handleInputChange} value={this.state.password}/>
+                            <Input type="password" invalid={invalidPassword} name="password" id="examplePassword" placeholder="Password..." required onChange={handleInputChange} value={this.state.password} />
                         </FormGroup>
-        
+
                         <FormGroup>
                             <Label for="exampleSelect">Avatar</Label>
                             <Input type="select" name="avatar" id="exampleSelect" onChange={handleInputChange} value={this.state.avatar}>
@@ -111,26 +130,49 @@ class CreateNewAccount extends Component {
                                 <option value='https://image.flaticon.com/icons/svg/828/828837.svg'>4</option>
                             </Input>
                         </FormGroup>
-        
-        
+
+
                         <FormGroup check>
                             <Label check>
-                                <Input type="checkbox"  onChange={userAgree} value={this.state.userAgree} checked={this.state.userAgree}/>
+                                <Input type="checkbox" onChange={userAgree} value={this.state.userAgree} checked={this.state.userAgree} />
                                 I agree to terms and conditions
                             </Label>
                         </FormGroup>
-                        <Button 
-                            disabled={!this.state.userAgree} 
-                            className="mt-3 w-100 bg-primary" 
+
+                        <Alert className="mt-2 mb-0" color={alertColor} isOpen={alertVisible} toggle={closeAlert}>
+                            {alertMessage}
+                        </Alert>
+
+
+                        {( (this.state.name === '' |
+                            this.state.email === '' |
+                            this.state.password === '' |
+                            !this.state.userAgree) ?
+                            
+                            <Button
+
+                            onClick={submitValidator}
+                            className="my-3 w-100 bg-secondary"
+                            >
+                            Submit
+                            </Button> :
+
+                            <Button
+                            type='submit'
+                            className="my-3 w-100 bg-primary"
                             onClick={handleSubmit}>
-                                Submit
-                        </Button>
+                            Submit
+                            </Button>
+                            )}
+
+                            
+                        
                     </Form>
-                
+
                 </div>
 
-                
-            
+
+
             </div>
 
         );
@@ -148,11 +190,17 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         submitAccount: userData => dispatch(submitAccount(userData)),
+        // este esta bien refreshEmail: () => dispatch({type: 'coso'}),
+        refreshEmail: () => dispatch(refreshEmail()),
+        refreshPassword: () => dispatch(refreshPassword()),
+        closeAlert: () => dispatch(closeAlert()),
+        completeFields: (state) => dispatch(completeFields(state))
+
     }
 
 }
 
 export default connect(
-    null, 
+    mapStateToProps,
     mapDispatchToProps)
-        (CreateNewAccount);
+    (CreateNewAccount);

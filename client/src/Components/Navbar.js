@@ -3,14 +3,18 @@ import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink, DropdownToggle,
   DropdownMenu,
   DropdownItem, UncontrolledDropdown } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 import './styles.css';
 
 const NavBar = (props) => {
+
   const [collapsed, setCollapsed] = useState(true);
 
   const toggleNavbar = () => setCollapsed(!collapsed);
+
+  const isLogged = props.usersReducer.isLogged 
 
   return (
     <div className="w-100">
@@ -20,21 +24,27 @@ const NavBar = (props) => {
               <DropdownToggle nav caret className="text-secondary">
                 {/* Options */}
                 <i className="material-icons login-icon">
-                  account_circle
+                  <img className="rounded-circle navbar-avatar" src={props.usersReducer.avatar} alt="avatar" />
+
                 </i>
               </DropdownToggle>
               <DropdownMenu right className="hardcode-menu">
-                <DropdownItem>
-                  Login
+
+                <DropdownItem disabled={isLogged}>
+                  <Link to="/login">
+                    Login
+                  </Link>
                 </DropdownItem>
-                <DropdownItem>
+
+                <DropdownItem disabled={isLogged}>
                   <Link to="/create-account">
                     Create Account
                   </Link>
                 </DropdownItem>
+
                 <DropdownItem divider />
-                <DropdownItem>
-                  Reset
+                <DropdownItem disabled={!isLogged}>
+                  Logout
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
@@ -54,4 +64,14 @@ const NavBar = (props) => {
   );
 }
 
-export default NavBar;
+const mapStateToProps = state => {
+  return {
+      usersReducer: state.usersReducer
+  }
+}
+
+
+export default connect(
+  mapStateToProps,
+  null)
+  (NavBar);

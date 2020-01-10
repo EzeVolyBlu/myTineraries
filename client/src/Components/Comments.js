@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Input } from 'reactstrap';
 
 
 export default function Comments() {
