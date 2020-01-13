@@ -14,7 +14,7 @@ const NavBar = (props) => {
 
   const toggleNavbar = () => setCollapsed(!collapsed);
 
-  const isLogged = props.usersReducer.isLogged 
+  const isLogged = props.loginReducer.isLogged 
 
   return (
     <div className="w-100">
@@ -24,7 +24,7 @@ const NavBar = (props) => {
               <DropdownToggle nav caret className="text-secondary">
                 {/* Options */}
                 <i className="material-icons login-icon">
-                  <img className="rounded-circle navbar-avatar" src={props.usersReducer.avatar} alt="avatar" />
+                  <img className="rounded-circle navbar-avatar" src={props.loginReducer.avatar} alt="avatar" />
 
                 </i>
               </DropdownToggle>
@@ -66,7 +66,7 @@ const NavBar = (props) => {
 
 const mapStateToProps = state => {
   return {
-      usersReducer: state.usersReducer
+    loginReducer: state.loginReducer
   }
 }
 

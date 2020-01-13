@@ -54,8 +54,6 @@ router.get('/auth/google',
                 userName: req.user.email
             }
 
-            console.log('payload',payload)
-    
             // const token = jwt.sign(payload, key.secretOrKey, {expiresIn: 1800})
     
     
@@ -67,11 +65,11 @@ router.get('/auth/google',
                 }
             );
 
-             res.redirect(`http://localhost:3000/user/${token}`);
+            res.redirect(`http://localhost:3000/user/${token}`);
 
         }catch(error){
             console.log(error)
-             res.redirect(`http://localhost:3000/users/error`);
+            res.redirect(`http://localhost:3000/users/error`);
         }    
 
 
@@ -128,8 +126,6 @@ router.post('/login', async (req, res) => {
                             res.send({
                                 success: true,
                                 token: token,
-                                username: payload.username,
-                                avatar: payload.avatarPicture
                             });
                         }
                     }

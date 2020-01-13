@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import Loading from '../Components/Spinner';
 import Itinerary from '../Components/Itinerary';
+import { connect } from 'react-redux'
+import { fetchItineraries } from "../store/actions/itinerariesActions";
 
-
-import fetchItineraries from "../store/actions/itineraryActions";
-
-// import getUsers from "../store/actions/usersActions";
 
 
 

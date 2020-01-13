@@ -5,7 +5,7 @@ import Logo from '../Components/Logo'
 import Carousel from '../Components/Carousel'
 
 import { connect } from "react-redux";
-import  fetchCities  from "../store/actions/cityActions";
+import  {fetchCities}  from "../store/actions/citiesActions";
 import Loading from '../Components/Spinner';
 
 

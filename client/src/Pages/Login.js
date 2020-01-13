@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
-import { submitLogin, closeAlert, completeFields, submitGoogleLogin } from "../store/actions/usersActions";
+import { submitLogin, submitGoogleLogin } from "../store/actions/loginActions";
+import {
+    closeAlert, 
+    completeFields
+} from '../store/actions/registerActions'
 
 class Login extends Component {
 
@@ -22,9 +25,9 @@ class Login extends Component {
 
     render() {
 
-        const alertVisible = this.props.usersReducer.alert.visible
-        const alertColor = this.props.usersReducer.alert.color
-        const alertMessage = this.props.usersReducer.alert.message
+        const alertVisible = this.props.loginReducer.alert.visible
+        const alertColor = this.props.loginReducer.alert.color
+        const alertMessage = this.props.loginReducer.alert.message
 
 
         const handleInputChange = event => {
@@ -38,6 +41,7 @@ class Login extends Component {
 
 
         const submitValidator = event => {
+
             this.props.completeFields(this.state)
             event.preventDefault();
         }
@@ -66,7 +70,7 @@ class Login extends Component {
                 <h2 className="title mt-4"> Login </h2>
 
                 <div className="d-flex justify-content-around mx-auto my-4">
-                    <img className="p-3 rounded-circle avatar" src={this.props.usersReducer.avatar} alt="avatar" />
+                    <img className="p-3 rounded-circle avatar" src={this.props.loginReducer.avatar} alt="avatar" />
                 </div>
 
                 <div className="col scroll w-100 ">
@@ -76,13 +80,13 @@ class Login extends Component {
                         <FormGroup>
                             <Label for="exampleEmail">Email</Label>
 
-                            <Input type="email" name="email" id="exampleEmail" placeholder="Email..." required onChange={handleInputChange} value={this.state.email} />
+                            <Input type="email" name="email" id="exampleEmail" placeholder="Email..." onChange={handleInputChange} value={this.state.email} />
 
 
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword">Password</Label>
-                            <Input type="password" name="password" id="examplePassword" placeholder="Password..." required onChange={handleInputChange} value={this.state.password} />
+                            <Input type="password" name="password" id="examplePassword" placeholder="Password..." onChange={handleInputChange} value={this.state.password} />
                         </FormGroup>
 
                         <Alert className="mt-2 mb-0" color={alertColor} isOpen={alertVisible} toggle={closeAlert}>
@@ -107,23 +111,32 @@ class Login extends Component {
                                 Login
                             </Button>
                         )}
-                    </Form>
+
 
                         {/* <Link to="http://localhost:5000/users/auth/google"> */}
-                        <a href="http://localhost:5000/users/auth/google">
                         
 
+                        {/* </Link> */}
 
 
+                    </Form>
+
+                        
+
+                    <div className="px-3">
+
+                        <a href="http://localhost:5000/users/auth/google">
                             <Button
                                 className="my-3 w-100 bg-primary"
                                 // onClick={handleGoogleLogin}
                             >
                                 Login with Google
                             </Button>
-                            </a>
+                        </a>
 
-                        {/* </Link> */}
+                    </div>
+
+
 
 
 
@@ -142,7 +155,7 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        usersReducer: state.usersReducer
+        loginReducer: state.loginReducer
     }
 }
 

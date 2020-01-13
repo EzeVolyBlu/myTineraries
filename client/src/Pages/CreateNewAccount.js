@@ -2,7 +2,13 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
-import { submitAccount, refreshEmail, refreshPassword, closeAlert, completeFields } from "../store/actions/usersActions";
+import { 
+    submitAccount, 
+    refreshEmail, 
+    refreshPassword, 
+    closeAlert, 
+    completeFields 
+} from "../store/actions/registerActions";
 
 class CreateNewAccount extends Component {
 
@@ -29,17 +35,19 @@ class CreateNewAccount extends Component {
     render() {
 
         
+        const {
+            invalidEmail,
+            invalidName,
+            invalidPassword
+        } = this.props.registerReducer;
 
-        const invalidEmail = this.props.usersReducer.invalidEmail
-        const invalidName = this.props.usersReducer.invalidName
-        const invalidPassword = this.props.usersReducer.invalidPassword
-        const alertVisible = this.props.usersReducer.alert.visible
-        const alertColor = this.props.usersReducer.alert.color
-        const alertMessage = this.props.usersReducer.alert.message
+        const {
+           visible,
+           color,
+           message
+        } = this.props.registerReducer.alert;
 
         const handleInputChange = event => {
-
-            
 
             let name = event.target.name;
             let value = event.target.value;
@@ -49,7 +57,6 @@ class CreateNewAccount extends Component {
             }else if (name === 'password') {
                 this.props.refreshPassword()
             }
-
 
             this.setState({
                 [name]: value
@@ -139,8 +146,8 @@ class CreateNewAccount extends Component {
                             </Label>
                         </FormGroup>
 
-                        <Alert className="mt-2 mb-0" color={alertColor} isOpen={alertVisible} toggle={closeAlert}>
-                            {alertMessage}
+                        <Alert className="mt-2 mb-0" color={color} isOpen={visible} toggle={closeAlert}>
+                            {message}
                         </Alert>
 
 
@@ -183,7 +190,7 @@ class CreateNewAccount extends Component {
 
 const mapStateToProps = state => {
     return {
-        usersReducer: state.usersReducer
+        registerReducer: state.registerReducer
     }
 }
 

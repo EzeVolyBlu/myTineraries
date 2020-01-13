@@ -2,17 +2,10 @@ import React, { Component } from 'react'
 import { Input } from 'reactstrap';
 import City from '../Components/City';
 import Loading from '../Components/Spinner';
-
-
-// import Search from '../Components/Search'
 import './Styles.css'
-
-// ARREGLAR SPINNER
-
 import { connect } from "react-redux";
-import  fetchCities  from "../store/actions/cityActions";
+import  { fetchCities }  from "../store/actions/citiesActions";
 
-// const axios = require('axios');
 
 class Cities extends Component {
    
@@ -22,17 +15,10 @@ class Cities extends Component {
         this.state = {
             search: ''
         }
-
-
     }
 
-
-
-
     componentDidMount(){
-
         this.props.fetchCities()
-      
     }
 
     updateSearch(event){

@@ -105,20 +105,6 @@ class Itinerary extends Component {
 
       <div className="">
 
-        {/* <Navbar color="faded" light>
-          <p onClick={toggleNavbar} className="mr-2" > View All Activities</p>
-          <Collapse isOpen={!collapsed} navbar>
-            <Nav navbar>
-              <NavItem>
-                <NavLink href="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
- */}
         <Collapse isOpen={this.state.isOpen}>
           <Card className="border-0">
             <h6 className="m-2 px-1">Activities</h6>
