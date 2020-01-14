@@ -39,6 +39,10 @@ export default (
             console.log('not logged',state)
             return Object.assign({}, state, {
                 isLogged: false,
+                user:{
+                    ...
+                    state.user
+                }
                 // user: {
                 //     avatar: action.payload.user.avatar,
                 //     name: action.payload.user.name,

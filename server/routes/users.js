@@ -137,15 +137,20 @@ router.post('/login', async (req, res) => {
 
 router.get('/',
     passport.authenticate("jwt", { session: false }),
-    (req, res) => {
+    async (req, res) => {
 
-      userModel
-        .findOne({ _id: req.user.id })
-        .then(user => {
-
-          res.json(user);
-        })
-        .catch(err => res.status(404).json({ error: "User does not exist!" }));
+        const user = await userModel.findById(req.user.id);
+        if(user){
+            res.send({
+                user,
+                success: true
+            })
+        }else{
+            res.send({
+                success: false,
+                error: 'User does not exist'
+            })
+        }
     }
   );
 

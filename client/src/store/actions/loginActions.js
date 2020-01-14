@@ -11,6 +11,7 @@ export const LOAD_USER = 'LOAD_USER'
 export const checkToken = (token) => async dispatch => {
     // const token = window.localStorage.getItem('token');
     try {
+        console.log('token to check', token)
         const user = await axios.get(
             `http://localhost:5000/users/`,
             {
@@ -38,23 +39,7 @@ export const checkToken = (token) => async dispatch => {
     } catch (error) {
         console.log(error)
     }
-
-
-
-
-
-
-
-    //asdasdasd
-    if (token) {
-
-        dispatch(loadUser(token))
-
-    } else {
-        dispatch({
-            type: NOT_LOGGED
-        })
-    }
+  
 }
 
 
@@ -66,34 +51,34 @@ export const logout = () => dispatch => {
 }
 
 
-const loadUser = token => async dispatch => {
+// const loadUser = token => async dispatch => {
 
-    try {
-        const user = await axios.get(
-            `http://localhost:5000/users/`,
-            {
-                method: 'GET',
-                headers: {
-                    'Authorization': `bearer ${token}`,
-                    // 'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            }
-        )
-
-
-        dispatch({
-            type: LOAD_USER,
-            payload: {
-                user: user.data
-            }
-        })
+//     try {
+//         const user = await axios.get(
+//             `http://localhost:5000/users/`,
+//             {
+//                 method: 'GET',
+//                 headers: {
+//                     'Authorization': `bearer ${token}`,
+//                     // 'Accept': 'application/json',
+//                     'Content-Type': 'application/json',
+//                 }
+//             }
+//         )
 
 
-    } catch (error) {
-        console.log(error)
-    }
-}
+//         dispatch({
+//             type: LOAD_USER,
+//             payload: {
+//                 user: user.data
+//             }
+//         })
+
+
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
 
 
