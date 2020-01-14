@@ -8,9 +8,44 @@ export const NOT_LOGGED = 'NOT_LOGGED'
 export const LOAD_USER = 'LOAD_USER'
 
 
-export const checkToken = () => dispatch => {
-    const token = window.localStorage.getItem('token');
+export const checkToken = (token) => async dispatch => {
+    // const token = window.localStorage.getItem('token');
+    try {
+        const user = await axios.get(
+            `http://localhost:5000/users/`,
+            {
+                method: 'GET',
+                headers: {
+                    'Authorization': `bearer ${token}`,
+                    // 'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
 
+        console.log('user',user);
+        
+
+
+        dispatch({
+            type: LOAD_USER,
+            payload: {
+                user: user.data
+            }
+        })
+
+
+    } catch (error) {
+        console.log(error)
+    }
+
+
+
+
+
+
+
+    //asdasdasd
     if (token) {
 
         dispatch(loadUser(token))

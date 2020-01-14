@@ -33,12 +33,12 @@ export default class App extends Component {
             <Switch>
 
               <Route exact path='/' component={Landing} />
+              
+
+              <Route exact path='/user/profile/:token' component={Profile} />
+              {/* <Route exact path='/user/profile/:token' component={Home} /> */}
 
 
-              <Route path='/user/profile/:token'>
-                <Profile />
-                <Home />
-              </Route>
 
               <Route exact path='/login' >
                 <Login />

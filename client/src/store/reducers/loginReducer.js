@@ -36,7 +36,15 @@ export default (
     switch (action.type) {
 
         case NOT_LOGGED:
-            return state;
+            console.log('not logged',state)
+            return Object.assign({}, state, {
+                isLogged: false,
+                // user: {
+                //     avatar: action.payload.user.avatar,
+                //     name: action.payload.user.name,
+                //     userName: action.payload.user.name
+                // }
+            }) ;
 
         case LOAD_USER:
             console.log('reducer',action.payload.user.name )
