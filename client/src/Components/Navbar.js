@@ -35,6 +35,16 @@ class NavBar extends Component {
 
 
   render() {
+
+
+
+    const { avatar } = this.props.loginReducer.user;
+
+
+
+
+
+
     const toggleNavbar = () => {
       this.setState({
         collapsed: !this.state.collapsed
@@ -60,7 +70,7 @@ class NavBar extends Component {
             <DropdownToggle nav caret className="text-secondary">
               {/* Options */}
               <i className="material-icons login-icon">
-                <img className="rounded-circle navbar-avatar" src={this.props.loginReducer.user.avatar} alt="avatar" />
+                <img className="rounded-circle navbar-avatar" src={avatar} alt="avatar" />
 
               </i>
             </DropdownToggle>

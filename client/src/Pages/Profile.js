@@ -18,7 +18,6 @@ class Profile extends Component {
 
     componentDidMount(){
 
-        console.log('this.props',this.props);
         
         // this.props.storeToken(this.state.token)
         this.props.checkToken()
@@ -27,10 +26,11 @@ class Profile extends Component {
 
     render() {
 
+        console.log(this.props)
         
-        if(!this.props.loginReducer.isLogged){
-            return <Redirect to={`/login`} />
-        }
+        // if(!this.props.loginReducer.isLogged){
+        //     return <Redirect to={`/login`} />
+        // }
 
 
 
