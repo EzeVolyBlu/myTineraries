@@ -42,7 +42,7 @@ router.get('/auth/google',
     );
 
 
-    router.get('/auth/google/callback', 
+router.get('/auth/google/callback', 
     googlePassport.authenticate('google', { failureRedirect: '/login' , session: false}), 
     (req, res, next) => {
         // Successful authentication, redirect home.
@@ -65,16 +65,12 @@ router.get('/auth/google',
                 }
             );
 
-            res.redirect(`http://localhost:3000/user/${token}`);
+            res.redirect(`http://localhost:3000/user/profile/${token}`);
 
         }catch(error){
             console.log(error)
-            res.redirect(`http://localhost:3000/users/error`);
+            // res.redirect(`http://localhost:3000/users/error`);
         }    
-
-
-    // res.redirect(`/users/getuser/${token}`);
-
   });
 
 
@@ -119,7 +115,6 @@ router.post('/login', async (req, res) => {
 
                             res.send({
                                 success: false,
-                                token: "There was an error",
                                 error
                             });
                         } else {
@@ -140,7 +135,7 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.get("/",
+router.get('/',
     passport.authenticate("jwt", { session: false }),
     (req, res) => {
 

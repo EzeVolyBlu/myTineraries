@@ -1,8 +1,10 @@
 import {
-    STORE_TOKEN,
+    TOKEN_STORED,
     LOGIN_SUCCESS,
     GOOGLE_LOGIN_SUCCESS,
-    ERROR_LOGIN
+    ERROR_LOGIN,
+    LOAD_USER,
+    NOT_LOGGED
 } from '../actions/loginActions';
 
 import {
@@ -12,8 +14,12 @@ import {
 
 export default (
     state = {
+        token: '',
         isLogged: false,
-        avatar: 'https://image.flaticon.com/icons/svg/747/747376.svg',
+        user:{
+            avatar: 'https://image.flaticon.com/icons/svg/747/747376.svg',
+            name: ''
+        },
         invalidEmail: false,
         invalidPassword: false,
         alert: {
@@ -29,16 +35,29 @@ export default (
 ) => {
     switch (action.type) {
 
-    
-        case STORE_TOKEN:
+        case NOT_LOGGED:
+            return state;
+
+        case LOAD_USER:
+            console.log('reducer',action.payload.user.name )
             return Object.assign({}, state, {
-                
+                isLogged: true,
+                user: {
+                    avatar: action.payload.user.avatar,
+                    name: action.payload.user.name,
+                    userName: action.payload.user.name
+                }
             }) 
     
-        case GOOGLE_LOGIN_SUCCESS:
+        case TOKEN_STORED:
             return Object.assign({}, state, {
+                isLogged: true
+            }) 
+    
+        // case GOOGLE_LOGIN_SUCCESS:
+        //     return Object.assign({}, state, {
                 
-            })
+        //     })
 
         case CLOSE_ALERT:
             return Object.assign({}, state, {
@@ -64,6 +83,7 @@ export default (
         case LOGIN_SUCCESS:
             return Object.assign({}, state, {
                 isLogged: true,
+                token: action.payload.token,
                 alert: {
                     color: 'primary',
                     message: 'Login succesful. Welcome...',

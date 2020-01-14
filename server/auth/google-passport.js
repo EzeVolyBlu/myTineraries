@@ -15,19 +15,17 @@ module.exports = passport.use(new GoogleStrategy({
 
     try{
 
-      console.log('profile._json',profile._json);
-      
         const userExists = await userModel.findOne({ email: profile._json.email });
 
         if(!userExists){
 
 
             //create user
-            console.log('create user')
+            console.log('create user', profile._json)
             const newUser = new userModel ({ 
               name: profile._json.name, 
               email: profile._json.email, 
-              avatar: profile._json.avatar, 
+              avatar: profile._json.picture, 
               password: profile._json.sub });
             
             await newUser.save();

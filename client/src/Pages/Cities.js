@@ -18,7 +18,9 @@ class Cities extends Component {
     }
 
     componentDidMount(){
-        this.props.fetchCities()
+
+        if(this.props.citiesReducer.cities.length === 0)
+            this.props.fetchCities()
     }
 
     updateSearch(event){
@@ -30,7 +32,6 @@ class Cities extends Component {
      
     render() {
         
-
         const { cities } = this.props.citiesReducer;
 
         let filteredCities = cities.filter(

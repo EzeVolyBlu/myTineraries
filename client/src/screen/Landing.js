@@ -12,25 +12,21 @@ import Loading from '../Components/Spinner';
 
 class Landing extends Component {
     
-    
-
     componentDidMount(){
-
-        console.log('did', this.props)
-        this.props.fetchCities()
-      
+        if(this.props.citiesReducer.cities.length === 0)
+            this.props.fetchCities()
     }
-    
     
     render(){
 
         const { cities } = this.props.citiesReducer;
-        console.log('cities',cities)
 
         return (
-            <div className="mb-auto">
+            <div className="mb-auto overflow-auto">
                 <Logo />
                 <StartBrowsing />
+
+                
 
 
                 {(this.props.citiesReducer.didInvalidate ? 

@@ -1,15 +1,74 @@
 import axios from 'axios';
 
-export const STORE_TOKEN = 'STORE_TOKEN'
+export const TOKEN_STORED = 'TOKEN_STORED'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const ERROR_LOGIN = 'ERROR_LOGIN'
 export const GOOGLE_LOGIN_SUCCESS = 'GOOGLE_LOGIN_SUCCESS'
+export const NOT_LOGGED = 'NOT_LOGGED'
+export const LOAD_USER = 'LOAD_USER'
 
-const storeToken = token => dispatch => {
+
+export const checkToken = () => dispatch => {
+    const token = window.localStorage.getItem('token');
+    console.log(token)
+
+    if (token) {
+
+        dispatch(loadUser(token))
+
+    } else {
+        dispatch({
+            type: NOT_LOGGED
+        })
+    }
+}
+
+
+export const logout = () => dispatch => {
+    window.localStorage.removeItem('token')
+    dispatch({
+        type: NOT_LOGGED
+    })
+}
+
+
+const loadUser = token => async dispatch => {
+
+    try {
+        const user = await axios.get(
+            `http://localhost:5000/users/`,
+            {
+                method: 'GET',
+                headers: {
+                    'Authorization': `bearer ${token}`,
+                    // 'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+
+
+        dispatch({
+            type: LOAD_USER,
+            payload: {
+                user: user.data
+            }
+        })
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+
+export const storeToken = token => dispatch => {
 
     window.localStorage.setItem('token', token);
     dispatch({
-        type: STORE_TOKEN,
+        type: TOKEN_STORED,
         payload: {
             token
         }
@@ -24,10 +83,17 @@ export const submitLogin = loginData => async dispatch => {
     if (res.data.success) {
         dispatch({
             type: LOGIN_SUCCESS,
+            payload: {
+                token: res.data.token
+            }
         })
 
-        dispatch(storeToken(res.data.token))
-        
+        // dispatch(storeToken(res.data.token))
+
+
+
+
+
     } else {
         dispatch({
             type: ERROR_LOGIN
@@ -38,11 +104,9 @@ export const submitLogin = loginData => async dispatch => {
 export const submitGoogleLogin = () => async dispatch => {
 
     //request if user exists
-    try{
-        const aver = await axios.get('http://localhost:5000/users/auth/google')
-        console.log('aver',aver);
-        
-    }catch(error){
+    try {
+        await axios.get('http://localhost:5000/users/auth/google')
+    } catch (error) {
         console.log(error)
     }
 
@@ -52,7 +116,7 @@ export const submitGoogleLogin = () => async dispatch => {
             success: true,
         }
 
-        
+
 
     })
 }
