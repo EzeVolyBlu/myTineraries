@@ -11,22 +11,22 @@ class Profile extends Component {
         super(props);
 
         this.state = {
-            token: this.props.match.params.token
+            // token: this.props.match.params.token
         }
 
     }
 
     componentDidMount(){
 
-
-        this.props.storeToken(this.state.token)
+        console.log('this.props',this.props);
+        
+        // this.props.storeToken(this.state.token)
         this.props.checkToken()
     }
 
 
     render() {
 
-        console.log(this.props.loginReducer);
         
         if(!this.props.loginReducer.isLogged){
             return <Redirect to={`/login`} />

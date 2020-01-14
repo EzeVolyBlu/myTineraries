@@ -10,7 +10,6 @@ export const LOAD_USER = 'LOAD_USER'
 
 export const checkToken = () => dispatch => {
     const token = window.localStorage.getItem('token');
-    console.log(token)
 
     if (token) {
 
@@ -66,6 +65,8 @@ const loadUser = token => async dispatch => {
 
 export const storeToken = token => dispatch => {
 
+    console.log('store token');
+    
     window.localStorage.setItem('token', token);
     dispatch({
         type: TOKEN_STORED,

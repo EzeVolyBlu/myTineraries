@@ -26,7 +26,6 @@ class NavBar extends Component {
 
   componentDidMount(){
     this.props.checkToken()
-    console.log(this.props.loginReducer);
 
   }
 
