@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { Component } from 'react';
 import {
   Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink, DropdownToggle,
   DropdownMenu,
@@ -25,7 +25,14 @@ class NavBar extends Component {
   }
 
   componentDidMount(){
-    this.props.checkToken()
+    
+    this.props.checkToken(this.props.loginReducer.token)
+
+  }
+
+  componentDidUpdate(){
+    
+    this.props.checkToken(this.props.loginReducer.token)
 
   }
 

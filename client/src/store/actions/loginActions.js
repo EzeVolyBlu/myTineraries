@@ -8,10 +8,9 @@ export const NOT_LOGGED = 'NOT_LOGGED'
 export const LOAD_USER = 'LOAD_USER'
 
 
-export const checkToken = (token) => async dispatch => {
+export const checkToken = token => async dispatch => {
     // const token = window.localStorage.getItem('token');
     try {
-        console.log('token to check', token)
         const user = await axios.get(
             `http://localhost:5000/users/`,
             {
@@ -24,14 +23,14 @@ export const checkToken = (token) => async dispatch => {
             }
         )
 
-        console.log('user',user);
         
 
 
         dispatch({
             type: LOAD_USER,
             payload: {
-                user: user.data
+                user: user.data,
+                token
             }
         })
 

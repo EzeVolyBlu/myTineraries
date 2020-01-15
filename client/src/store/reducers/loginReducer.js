@@ -1,7 +1,6 @@
 import {
     TOKEN_STORED,
     LOGIN_SUCCESS,
-    GOOGLE_LOGIN_SUCCESS,
     ERROR_LOGIN,
     LOAD_USER,
     NOT_LOGGED
@@ -36,12 +35,11 @@ export default (
     switch (action.type) {
 
         case NOT_LOGGED:
-            console.log('not logged',state)
             return Object.assign({}, state, {
                 isLogged: false,
                 user:{
-                    ...
-                    state.user
+                    avatar: 'https://image.flaticon.com/icons/svg/747/747376.svg',
+                    name: ''
                 }
                 // user: {
                 //     avatar: action.payload.user.avatar,
@@ -51,14 +49,13 @@ export default (
             }) ;
 
         case LOAD_USER:
-            console.log('reducer',action.payload.user.name )
             return Object.assign({}, state, {
                 isLogged: true,
                 user: {
                     avatar: action.payload.user.avatar,
                     name: action.payload.user.name,
-                    userName: action.payload.user.name
-                }
+                },
+                token: action.payload.token
             }) 
     
         case TOKEN_STORED:

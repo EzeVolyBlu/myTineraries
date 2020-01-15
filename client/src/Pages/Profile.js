@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+
 import { storeToken,
 checkToken } from "../store/actions/loginActions";
 import { connect } from 'react-redux';
@@ -8,19 +9,10 @@ import Home from '../Components/Home'
 
 class Profile extends Component {
 
-    constructor(props){
-        super(props);
-
-        this.state = {
-            token: this.props.match.params.token
-        }
-
-    }
-
+    
     componentDidMount(){
-        console.log((this.props));
 
-        this.props.checkToken(this.state.token)
+        this.props.checkToken(this.props.match.params.token)
 
         // this.props.storeToken(this.state.token)
     }
@@ -28,11 +20,10 @@ class Profile extends Component {
 
     render() {
 
-        console.log((this.props));
         
-        // if(!this.props.loginReducer.isLogged){
-        //     return <Redirect to={`/login`} />
-        // }
+        if(!this.props.loginReducer.isLogged){
+            return <Redirect to={`/login`} />
+        }
 
 
 
