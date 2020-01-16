@@ -184,7 +184,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         submitLogin: loginData => dispatch(submitLogin(loginData)),
-        // submitGoogleLogin: () => dispatch(submitGoogleLogin()),
         closeAlert: () => dispatch(closeAlert()),
         completeFields: (state) => dispatch(completeFields(state))
 

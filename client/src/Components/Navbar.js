@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { 
   logout,
-  checkToken } from '../store/actions/loginActions'
+  checkToken 
+} from '../store/actions/loginActions'
 
 import './styles.css';
 
@@ -61,7 +62,6 @@ class NavBar extends Component {
 
     const logout = () => {
       this.props.logout()
-      console.log(this.props.loginReducer);
       
     }
 
@@ -105,7 +105,12 @@ class NavBar extends Component {
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink href="/components/">Components</NavLink>
+
+                {(this.props.loginReducer.isLogged ? 
+                <NavLink href={`/user/profile/${this.props.loginReducer.token}`}>My Profile</NavLink> :
+                <NavLink href={`/login`}>My Profile</NavLink>)}
+
+
               </NavItem>
               <NavItem>
                 <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>

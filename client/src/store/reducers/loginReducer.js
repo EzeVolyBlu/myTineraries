@@ -25,7 +25,8 @@ export default (
             visible: false,
             color: '',
             message: ''
-        }
+        },
+        blackListTokens: []
 
 
         // success: false,
@@ -34,13 +35,20 @@ export default (
 ) => {
     switch (action.type) {
 
+
         case NOT_LOGGED:
+
             return Object.assign({}, state, {
                 isLogged: false,
+                token:'',
                 user:{
                     avatar: 'https://image.flaticon.com/icons/svg/747/747376.svg',
                     name: ''
-                }
+                },
+                blackListTokens:[
+                    ...state.blackListTokens,
+                    action.payload.token
+                ]
                 // user: {
                 //     avatar: action.payload.user.avatar,
                 //     name: action.payload.user.name,

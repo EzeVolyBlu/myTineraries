@@ -6,41 +6,39 @@ const key = require("../keys").secretOrKey;
 const jwt = require("jsonwebtoken");
 const passport = require ('passport')
 const googlePassport = require('../auth/google-passport.js');
+const tokenModel = require('../model/auth')
 
-
+// const auth = require('../middleware/auth');
 
 const { userValidationRules, validate } = require('./validator.js')
-
 const userModel = require('../model/userModel')
 
 
-router.get('/all', async (req, res) => {
-    try{
 
-        const users = await userModel.find({});
-        res.send({users})
-    }catch(e){
-        res.send(e)
-    }
-})
-
-
-/*get city*/
-router.get('/:userId',
+router.get('/',
+    passport.authenticate("jwt", { session: false }),
     (req, res) => {
-        let userId = req.params.userId;
-        userModel.findById(userId)
-            .then(user => {
-                res.send(user)
-            })
-            .catch(err => res.send(err));
-    });
+
+
+        //agregar blacklist
+
+      userModel
+        .findOne({ _id: req.user.id })
+        .then(user => {
+
+          res.json({
+              user,
+            success: true
+        });
+        })
+        .catch(err => res.status(404).json({ err }));
+    }
+  );
 
 
 router.get('/auth/google', 
     passport.authenticate('google', { scope: ['profile','email'] })
     );
-
 
 router.get('/auth/google/callback', 
     googlePassport.authenticate('google', { failureRedirect: '/login' , session: false}), 
@@ -75,6 +73,42 @@ router.get('/auth/google/callback',
 
 
 
+router.get(`/token/:token`, async (req, res) =>{
+    let token = req.params.token;
+    
+    try{
+        const blackToken = await tokenModel.findOne({token});
+        
+        if(blackToken){
+            res.send({
+                status: 'Unauthorized. The Token is in the blackList'
+            })
+        }else {
+            res.send({
+                status: 'Access success'
+            })
+        }
+        
+    }catch(error){
+        res.send({
+            error
+        })
+    }
+})
+
+
+
+router.post(`/token/:token`, (req, res) =>{
+    const newToken = new tokenModel({
+        token: req.params.token
+    })
+
+    newToken.save().then(tk => {
+        res.status(201).send(tk)
+        })
+        .catch(err => {
+        res.status(500).send("Server error")}) 
+})
 
 router.post('/login', async (req, res) => {
 
@@ -134,20 +168,6 @@ router.post('/login', async (req, res) => {
         res.send({ e })
     }
 })
-
-router.get('/',
-    passport.authenticate("jwt", { session: false }),
-    (req, res) => {
-
-      userModel
-        .findOne({ _id: req.user.id })
-        .then(user => {
-
-          res.json(user);
-        })
-        .catch(err => res.status(404).json({ error: "User does not exist!" }));
-    }
-  );
 
 
 router.post('/', userValidationRules(), validate, async (req, res) => {

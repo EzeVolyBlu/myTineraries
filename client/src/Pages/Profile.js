@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom';
 
-import { storeToken,
-checkToken } from "../store/actions/loginActions";
+import { 
+    checkToken 
+} from "../store/actions/loginActions";
 import { connect } from 'react-redux';
 import Home from '../Components/Home'
 
@@ -11,10 +12,12 @@ class Profile extends Component {
 
     
     componentDidMount(){
-
+        
+        
         this.props.checkToken(this.props.match.params.token)
 
-        // this.props.storeToken(this.state.token)
+
+
     }
 
 
@@ -49,7 +52,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        storeToken: token => dispatch(storeToken(token)),
         checkToken: token => dispatch(checkToken(token))
     }
 

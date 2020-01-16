@@ -12,15 +12,20 @@ import Login from './Pages/Login'
 // import { connect } from 'react-redux';
 // import { loadUser } from './store/actions/loginActions'
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 
 
 
-export default class App extends Component {
+
+class App extends Component {
 
 
 
   render() {
+    console.log('this.props.loginReducer',this.props.loginReducer);
 
+    const isLogged = this.props.loginReducer.isLogged
+    console.log('isLogged',isLogged)
 
     return (
       <BrowserRouter>
@@ -35,7 +40,21 @@ export default class App extends Component {
               <Route exact path='/' component={Landing} />
               
 
-              <Route exact path='/user/profile/:token' component={Profile} />
+
+              <Route exact path='/user/profile/:token' component={Profile} /> :
+
+              {/* {
+                (
+                  (isLogged) ?
+                <Route exact path='/user/profile/:token' component={Profile} /> :
+                <Route exact path='/user/profile/:token' component={Cities} /> 
+                )
+                
+              } */}
+
+
+              
+
               {/* <Route exact path='/user/profile/:token' component={Home} /> */}
 
 
@@ -85,3 +104,17 @@ export default class App extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+      loginReducer: state.loginReducer
+  }
+}
+
+
+
+export default connect(
+  mapStateToProps,
+  // mapDispatchToProps
+  null
+  )
+  (App);

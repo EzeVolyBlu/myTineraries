@@ -19,7 +19,8 @@ export default (
             visible: false,
             color: '',
             message: ''
-        }
+        },
+        registerSuccess: false
     },
     action
 ) => {
@@ -51,7 +52,8 @@ export default (
                     visible: true,
                     color: 'primary',
                     message: 'User created successfuly'
-                }
+                },
+                registerSuccess: true
 
             })
 

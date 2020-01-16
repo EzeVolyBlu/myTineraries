@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
+// import { Redirect } from 'react-router-dom'
+
 import { 
     submitAccount, 
     refreshEmail, 
@@ -27,6 +29,10 @@ class CreateNewAccount extends Component {
 
     componentWillUnmount(){
         this.props.closeAlert()
+
+        this.setState({
+            password:''
+        })
     }
 
 
@@ -38,14 +44,19 @@ class CreateNewAccount extends Component {
         const {
             invalidEmail,
             invalidName,
-            invalidPassword
+            invalidPassword,
+            // registerSuccess
         } = this.props.registerReducer;
+
+        
 
         const {
            visible,
            color,
            message
         } = this.props.registerReducer.alert;
+
+
 
         const handleInputChange = event => {
 
