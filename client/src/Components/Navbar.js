@@ -19,14 +19,18 @@ class NavBar extends Component {
     super(props);
 
     this.state = {
-        collapsed: true
+        collapsed: true,
+        token: ''
     }
 
   }
 
+  componentDidMount(){
+    this.props.checkToken(this.props.token)    
+  }
+
   render() {
 
-  
   const avatar = this.props.loginReducer.user.avatar;
   // const { avatar } = this.props.loginReducer.user;
 
@@ -118,7 +122,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
       logout: () => dispatch(logout()),
-      checkToken: () => dispatch(checkToken())
+      checkToken: (token) => dispatch(checkToken(token))
   }
 }
 

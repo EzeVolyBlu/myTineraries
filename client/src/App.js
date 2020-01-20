@@ -19,7 +19,8 @@ export default class App extends Component {
 
 
   render() {
-   
+
+    const token = window.localStorage.getItem('token')
 
     return (
       <BrowserRouter>
@@ -27,7 +28,7 @@ export default class App extends Component {
 
           <div className="mobile d-flex flex-column justify-content-between">
 
-            <Navbar />
+            <Navbar token={token}/>
 
             <Switch>
 

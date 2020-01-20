@@ -17,7 +17,6 @@ export const STORE_TOKEN = 'STORE_TOKEN'
 export const validating = token => async dispatch => {
 
         
-    let success = false;
     let access = false;
 
     //check blacklist token
@@ -33,7 +32,7 @@ export const validating = token => async dispatch => {
         //validate jwt token and get user information
         try{
             
-            const res = await axios.get(
+             await axios.get(
                 `http://localhost:5000/users/`,
                 {
                     method: 'GET',
@@ -92,12 +91,12 @@ export const validating = token => async dispatch => {
 }
 
 
-const storeToken = token => dispatch =>
-{
-    dispatch({
-        type: STORE_TOKEN
-    })
-}
+// const storeToken = token => dispatch =>
+// {
+//     dispatch({
+//         type: STORE_TOKEN
+//     })
+// }
 
 export const checkToken = token => async dispatch => {
 
@@ -135,7 +134,9 @@ export const checkToken = token => async dispatch => {
                 }
             )
 
-            window.localStorage.setItem('token',token)
+            if(!window.localStorage.getItem('token')){
+                window.localStorage.setItem('token',token)
+            }
 
             dispatch({
                 type: LOGIN_SUCCESS,

@@ -58,3 +58,7 @@
 .navbar-avatar{
     width: 40px;
 }
+
+.fav-button:hover {
+    cursor: pointer;
+}

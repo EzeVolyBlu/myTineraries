@@ -1,5 +1,6 @@
 // // import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 // import image from '../img/GaudiLover.png'
 import React, { Component } from 'react';
@@ -8,6 +9,10 @@ import Comments from '../Components/Comments'
 
 
 import { Collapse, Button, CardBody, Card } from 'reactstrap';
+import { 
+  submitFav,
+  // checkFav
+ } from '../store/actions/itinerariesActions'
 
 
 
@@ -17,6 +22,9 @@ class Itinerary extends Component {
     super(props);
 
     this.state = {
+      isFav: this.props.itinerariesReducer.isFav,
+      itineraryId: this.props.itinerary._id,
+      userFav: this.props.loginReducer.user.favourites,
       isOpen: false,
       user: {
         name: '',
@@ -35,6 +43,17 @@ class Itinerary extends Component {
 
   componentDidMount(){
 
+
+    this.state.userFav.map( fav => {
+      if(fav === this.state.itineraryId){
+        this.setState({
+          isFav: true
+        })
+      }
+    })
+
+
+
     this.mounted = true;
 
     if(this.mounted)
@@ -48,12 +67,25 @@ class Itinerary extends Component {
 
   }
 
+  
+
 
 
 
 
 
   render () {
+
+    
+
+    const handleSubmitFav = (e) => {
+      
+      this.props.submitFav(this.state.itineraryId, this.state.isFav, this.props.loginReducer.token)
+      this.setState({
+        isFav: !this.state.isFav
+      })
+      e.preventDefault()
+    }
 
   const toggle = () => this.setState({isOpen: !this.state.isOpen});
   const { 
@@ -106,6 +138,19 @@ class Itinerary extends Component {
             {hashtags.map((it, index) => {
               return <p className="mx-1" key={index}> {it}</p>
             })}
+
+            {( this.state.isFav ? 
+            <i className="material-icons mx-auto fav-button" onClick={handleSubmitFav}>
+            favorite
+            </i> : 
+            <i className="material-icons mx-auto fav-button" onClick={handleSubmitFav}>
+            favorite_border
+            </i>
+            )}
+
+
+
+            
 
 
           </div>
@@ -162,4 +207,36 @@ class Itinerary extends Component {
   
 };
 
-export default Itinerary;
+
+
+
+
+
+
+
+
+
+
+const mapStateToProps = state => {
+  return {
+      loginReducer: state.loginReducer,
+      itinerariesReducer: state.itinerariesReducer
+      // usersReducer: state.usersReducer
+
+  }
+}
+
+
+const mapDispatchToProps = dispatch => {
+
+
+  return {
+      submitFav: (itId, isFav, userId) => dispatch(submitFav(itId, isFav, userId)),
+      // checkFav: (itId, userFavs) => dispatch(checkFav(itId, userFavs))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Itinerary);

@@ -22,7 +22,6 @@ class Itineraries extends Component {
 
     componentDidMount() {
 
-        console.log(this.props)
         this.props.fetchItineraries(this.state.cityId);
 
 
