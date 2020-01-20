@@ -140,10 +140,10 @@ class Itinerary extends Component {
             })}
 
             {( this.state.isFav ? 
-            <i className="material-icons mx-auto fav-button" onClick={handleSubmitFav}>
+            <i className="material-icons mx-auto fav-button" hidden={!this.props.loginReducer.isLogged} onClick={handleSubmitFav}>
             favorite
             </i> : 
-            <i className="material-icons mx-auto fav-button" onClick={handleSubmitFav}>
+            <i className="material-icons mx-auto fav-button" hidden={!this.props.loginReducer.isLogged} onClick={handleSubmitFav}>
             favorite_border
             </i>
             )}

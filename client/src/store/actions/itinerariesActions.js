@@ -124,7 +124,6 @@ export const submitFav = (itId, isFav, token) => async dispatch => {
 
 
   }
-  console.log('submit fav', itId);
 
 }
 
