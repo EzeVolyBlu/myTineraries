@@ -18,16 +18,19 @@ class Itinerary extends Component {
 
     this.state = {
       isOpen: false,
-      users: []
+      user: {
+        name: '',
+        avatar: 'https://image.flaticon.com/icons/svg/747/747376.svg'
+      }
     }
   }
 
 
   getUsers = async () => {
     let res = await axios.get(`http://localhost:5000/users/${this.props.itinerary.userId}`);
-    let { name, image } = res.data;
+    let { name, avatar } = res.data;
 
-    this.setState({ users: {name, image} });
+    this.setState({ user: {name, avatar} });
   };
 
   componentDidMount(){
@@ -53,11 +56,19 @@ class Itinerary extends Component {
   render () {
 
   const toggle = () => this.setState({isOpen: !this.state.isOpen});
-  console.log(this.state)
-  const image = this.state.users.image
-  console.log(image)
-  console.log(this.state.users)
-
+  const { 
+    name, 
+    avatar 
+  } = this.state.user
+  
+  const {
+    title,
+    rating,
+    duration,
+    price,
+    hashtags,
+    activities
+  } = this.props.itinerary
 
   return (
 
@@ -66,25 +77,25 @@ class Itinerary extends Component {
       <div className="row fix-margin pt-2">
 
         <div className="col-3 px-2">
-          <img width="100%" src={image} alt="profile" className="carg-img rounded-circle p-2" />
-          <p className="text-center">{this.state.users.name}</p>
+          <img width="100%" src={avatar} alt="profile" className="carg-img rounded-circle p-2" />
+          <p className="text-center">{name}</p>
         </div>
 
         <div className="col-9 p-0">
-          <h4 className="mt-1 mx-1">{this.props.itinerary.title}</h4>
+          <h4 className="mt-1 mx-1">{title}</h4>
 
           <div className="row mx-1">
 
             <div className="col-3 p-0">
-              <p>Likes: {this.props.itinerary.rating}</p>
+              <p>Likes: {rating}</p>
             </div>
 
             <div className="col-5 p-0">
-              <p>Duration: {this.props.itinerary.duration}</p>
+              <p>Duration: {duration}</p>
             </div>
 
             <div className="col-4 p-0">
-              <p>Price: $ {this.props.itinerary.price} </p>
+              <p>Price: $ {price} </p>
             </div>
 
 
@@ -92,7 +103,7 @@ class Itinerary extends Component {
           <div className="row mx-1">
 
 
-            {this.props.itinerary.hashtags.map((it, index) => {
+            {hashtags.map((it, index) => {
               return <p className="mx-1" key={index}> {it}</p>
             })}
 
@@ -111,8 +122,8 @@ class Itinerary extends Component {
             <CardBody>
 
               <ItCarousel 
-                carouselData={this.props.itinerary.activities} 
-                itName={this.props.itinerary.title}/>
+                carouselData={activities} 
+                itName={title}/>
 
 
 

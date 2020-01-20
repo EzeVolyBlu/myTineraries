@@ -26,7 +26,7 @@ export const fetchItineraries = cityId => async dispatch => {
 
   //request itineraries
 
-  try{
+  try {
 
     dispatch({
       type: REQUEST_ITINERARIES,
@@ -42,10 +42,29 @@ export const fetchItineraries = cityId => async dispatch => {
     })
 
 
-  }catch(error){
+  } catch (error) {
     console.log(error)
   }
 
 }
 
+export const getItinerary = itineraryId => async dispatch => {
 
+  dispatch({
+    type: REQUEST_ITINERARIES,
+  })
+
+  try {
+
+    const res = await axios.get(`http://localhost:5000/itineraries`, {
+      headers: {itineraryId}
+    });
+
+    console.log('res',res);
+    
+  } catch (error) {
+    console.log(error);
+    
+  }
+
+}

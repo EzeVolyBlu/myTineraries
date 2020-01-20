@@ -14,4 +14,11 @@ router.get('/:id',
             .catch(err => res.send(err));
     });
 
+router.get('/',
+    (req, res) => {
+        // console.log(req.header);
+        console.log(req.headers);
+        res.send(req.headers.itineraryid)
+    });
+
 module.exports = router

@@ -134,7 +134,6 @@ export const checkToken = token => async dispatch => {
                     }
                 }
             )
-            console.log('res',res);
 
             window.localStorage.setItem('token',token)
 

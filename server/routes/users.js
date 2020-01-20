@@ -4,7 +4,7 @@ const express = require('express')
 const router = express.Router()
 const key = require("../keys").secretOrKey;
 const jwt = require("jsonwebtoken");
-const passport = require ('passport')
+const passport = require('passport')
 const googlePassport = require('../auth/google-passport.js');
 const tokenModel = require('../model/auth')
 
@@ -14,46 +14,78 @@ const { userValidationRules, validate } = require('./validator.js')
 const userModel = require('../model/userModel')
 
 
-
+//getUser
 router.get('/',
     passport.authenticate("jwt", { session: false }),
     async (req, res) => {
 
-        try{
+        try {
 
-            const user = await userModel.findById(req.user.id) 
+            const user = await userModel.findById(req.user.id)
             res.json({
                 user,
                 success: true
             });
 
-        }catch(error){
+        } catch (error) {
             res.status(404).json({
                 error
             })
         }
-
-
-
-
-
-
-
-        //agregar blacklist
-
-
-
-
     }
-  );
+);
+
+//getFavourites
+/*
+
+router.get('/favourites',
+    passport.authenticate("jwt", { session: false }),
+    async (req, res) => {
+
+        try {
+
+            const user = await userModel.findById(req.user.id)
+            res.json({
+                user,
+                success: true
+            });
+
+        } catch (error) {
+            res.status(404).json({
+                error
+            })
+        }
+    }
+);
+
+*/
+
+router.get('/:id', async (req,res) => {
+    const user = await userModel.findById(req.params.id)
+    const { name, avatar } = user
+    res.send({
+        name, avatar
+    })
+})
+
+router.get('/:id',
+    (req, res) => {
+        let cityRequested = req.params.id;
+        cityModel.findById(cityRequested)
+            .then(city => {
+                res.send(city)
+            })
+            .catch(err => res.send(err));
+    });
 
 
-router.get('/auth/google', 
-    passport.authenticate('google', { scope: ['profile','email'] })
-    );
 
-router.get('/auth/google/callback', 
-    googlePassport.authenticate('google', { failureRedirect: '/login' , session: false}), 
+router.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+router.get('/auth/google/callback',
+    googlePassport.authenticate('google', { failureRedirect: '/login', session: false }),
     (req, res, next) => {
         // Successful authentication, redirect home.
 
@@ -65,8 +97,8 @@ router.get('/auth/google/callback',
             }
 
             // const token = jwt.sign(payload, key.secretOrKey, {expiresIn: 1800})
-    
-    
+
+
             const token = jwt.sign(
                 payload,
                 key,
@@ -77,31 +109,31 @@ router.get('/auth/google/callback',
 
             res.redirect(`http://localhost:3000/user/profile/${token}`);
 
-        }catch(error){
+        } catch (error) {
             console.log(error)
             // res.redirect(`http://localhost:3000/users/error`);
-        }    
-  });
+        }
+    });
 
 
 
-router.get(`/token/:token`, async (req, res) =>{
+router.get(`/token/:token`, async (req, res) => {
     let token = req.params.token;
-    
-    try{
-        
-        let blackTokenExist = true;
-        const blackToken = await tokenModel.findOne({token});
-        
 
-        if(!blackToken)
+    try {
+
+        let blackTokenExist = true;
+        const blackToken = await tokenModel.findOne({ token });
+
+
+        if (!blackToken)
             blackTokenExist = false;
 
         res.send({
             blackTokenExist,
         })
-        
-    }catch(error){
+
+    } catch (error) {
         res.send({
             error
         })
@@ -110,16 +142,17 @@ router.get(`/token/:token`, async (req, res) =>{
 
 
 
-router.post(`/token/:token`, (req, res) =>{
+router.post(`/token/:token`, (req, res) => {
     const newToken = new tokenModel({
         token: req.params.token
     })
 
     newToken.save().then(tk => {
         res.status(201).send(tk)
-        })
+    })
         .catch(err => {
-        res.status(500).send("Server error")}) 
+            res.status(500).send("Server error")
+        })
 })
 
 router.post('/login', async (req, res) => {

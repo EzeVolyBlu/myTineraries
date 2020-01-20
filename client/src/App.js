@@ -50,10 +50,7 @@ export default class App extends Component {
                 <Home />
               </Route>
 
-              <Route exact path='/itineraries/:cityId' >
-                <Itineraries />
-                <Home />
-              </Route>
+              <Route exact path='/itineraries/:cityId' component={Itineraries} />
 
               <Route path="*">
                 <ErrorRoute />

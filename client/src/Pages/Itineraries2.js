@@ -1,5 +1,3 @@
-import Home from '../Components/Home'
-
 import React, { Component } from 'react'
 import Loading from '../Components/Spinner';
 import Itinerary from '../Components/Itinerary';
@@ -22,7 +20,6 @@ class Itineraries extends Component {
 
     componentDidMount() {
 
-        console.log(this.props)
         this.props.fetchItineraries(this.state.cityId);
 
 
@@ -66,7 +63,6 @@ class Itineraries extends Component {
                     </div>
 
                 )}
-                <Home />            
 
             </div>
         )

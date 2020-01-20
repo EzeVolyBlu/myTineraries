@@ -97,6 +97,9 @@ class NavBar extends Component {
               <NavItem>
                 <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink href="/itineraries">Itineraries</NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>

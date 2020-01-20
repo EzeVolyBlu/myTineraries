@@ -21,7 +21,8 @@ export default (
         isLogged: false,
         user:{
             avatar: 'https://image.flaticon.com/icons/svg/747/747376.svg',
-            name: ''
+            name: '',
+            favourites: []
         },
         invalidEmail: false,
         invalidPassword: false,
@@ -42,7 +43,6 @@ export default (
     switch (action.type) {
 
         case STORE_TOKEN:
-            console.log('storetok');
             
             return Object.assign({}, state, {
                 isLogged: true
