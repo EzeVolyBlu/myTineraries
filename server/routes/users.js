@@ -17,21 +17,33 @@ const userModel = require('../model/userModel')
 
 router.get('/',
     passport.authenticate("jwt", { session: false }),
-    (req, res) => {
+    async (req, res) => {
+
+        try{
+
+            const user = await userModel.findById(req.user.id) 
+            res.json({
+                user,
+                success: true
+            });
+
+        }catch(error){
+            res.status(404).json({
+                error
+            })
+        }
+
+
+
+
+
 
 
         //agregar blacklist
 
-      userModel
-        .findOne({ _id: req.user.id })
-        .then(user => {
 
-          res.json({
-              user,
-            success: true
-        });
-        })
-        .catch(err => res.status(404).json({ err }));
+
+
     }
   );
 
@@ -77,17 +89,17 @@ router.get(`/token/:token`, async (req, res) =>{
     let token = req.params.token;
     
     try{
+        
+        let blackTokenExist = true;
         const blackToken = await tokenModel.findOne({token});
         
-        if(blackToken){
-            res.send({
-                status: 'Unauthorized. The Token is in the blackList'
-            })
-        }else {
-            res.send({
-                status: 'Access success'
-            })
-        }
+
+        if(!blackToken)
+            blackTokenExist = false;
+
+        res.send({
+            blackTokenExist,
+        })
         
     }catch(error){
         res.send({

@@ -7,7 +7,9 @@ import {
 } from "../store/actions/loginActions";
 import {
     closeAlert, 
-    completeFields
+    completeFields,
+    refreshEmail,
+    refreshPassword
 } from '../store/actions/registerActions'
 
 import { Redirect } from 'react-router-dom'
@@ -27,6 +29,9 @@ class Login extends Component {
 
     componentWillUnmount(){
         this.props.closeAlert()
+        this.props.refreshEmail()
+        this.props.refreshPassword()
+
     }
 
     
@@ -35,6 +40,12 @@ class Login extends Component {
 
 
     render() {
+
+        const {
+            invalidEmail,
+            invalidPassword,
+            // registerSuccess
+        } = this.props.registerReducer;
 
         const {
             visible, 
@@ -55,6 +66,12 @@ class Login extends Component {
         const handleInputChange = event => {
             let name = event.target.name;
             let value = event.target.value;
+
+            if (name === 'email') {
+                this.props.refreshEmail()
+            }else if (name === 'password') {
+                this.props.refreshPassword()
+            }
 
             this.setState({
                 [name]: value
@@ -102,13 +119,13 @@ class Login extends Component {
                         <FormGroup>
                             <Label for="exampleEmail">Email</Label>
 
-                            <Input type="email" name="email" id="exampleEmail" placeholder="Email..." onChange={handleInputChange} value={this.state.email} />
+                            <Input type="email" invalid={invalidEmail} name="email" id="exampleEmail" placeholder="Email..." onChange={handleInputChange} value={this.state.email} />
 
 
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword">Password</Label>
-                            <Input type="password" name="password" id="examplePassword" placeholder="Password..." onChange={handleInputChange} value={this.state.password} />
+                            <Input type="password" invalid={invalidPassword} name="password" id="examplePassword" placeholder="Password..." onChange={handleInputChange} value={this.state.password} />
                         </FormGroup>
 
                         <Alert className="mt-2 mb-0" color={color} isOpen={visible} toggle={closeAlert}>
@@ -177,7 +194,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        loginReducer: state.loginReducer
+        loginReducer: state.loginReducer,
+        registerReducer: state.registerReducer
     }
 }
 
@@ -185,7 +203,9 @@ const mapDispatchToProps = dispatch => {
     return {
         submitLogin: loginData => dispatch(submitLogin(loginData)),
         closeAlert: () => dispatch(closeAlert()),
-        completeFields: (state) => dispatch(completeFields(state))
+        completeFields: (state) => dispatch(completeFields(state)),
+        refreshEmail: () => dispatch(refreshEmail()),
+        refreshPassword: () => dispatch(refreshPassword()),
 
     }
 

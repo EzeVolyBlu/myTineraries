@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom';
 
 import { 
-    checkToken 
+    checkToken,
 } from "../store/actions/loginActions";
 import { connect } from 'react-redux';
 import Home from '../Components/Home'
@@ -11,24 +11,31 @@ import Home from '../Components/Home'
 class Profile extends Component {
 
     
-    componentDidMount(){
-        
-        
+    UNSAFE_componentWillMount(){
+        // compare if token params = black list -> unauthorized 
         this.props.checkToken(this.props.match.params.token)
+        // if(this.props.loginReducer.authorized)
+            // console.log('auth');
 
-
-
+        
+     
     }
+
+    // componentDidMount(){
+            
+        
+    // }
 
 
     render() {
 
         
-        if(!this.props.loginReducer.isLogged){
+        
+        if(!this.props.loginReducer.authorized && !this.props.loginReducer.fetching){
             return <Redirect to={`/login`} />
         }
 
-
+         
 
 
 
@@ -52,7 +59,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        checkToken: token => dispatch(checkToken(token))
+        checkToken: token => dispatch(checkToken(token)),
     }
 
 }

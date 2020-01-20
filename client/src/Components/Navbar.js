@@ -19,34 +19,16 @@ class NavBar extends Component {
     super(props);
 
     this.state = {
-        // isLogged: this.props.loginReducer.isLogged,
         collapsed: true
     }
 
   }
 
-  componentDidMount(){
-    
-    this.props.checkToken(this.props.loginReducer.token)
-
-  }
-
-  componentDidUpdate(){
-    
-    this.props.checkToken(this.props.loginReducer.token)
-
-  }
-
-  // componentDidUpdate(){
-  //   this.props.checkToken()
-  // }
-
-
   render() {
 
-
-
-    const { avatar } = this.props.loginReducer.user;
+  
+  const avatar = this.props.loginReducer.user.avatar;
+  // const { avatar } = this.props.loginReducer.user;
 
 
 

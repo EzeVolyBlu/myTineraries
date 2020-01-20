@@ -3,7 +3,11 @@ import {
     LOGIN_SUCCESS,
     ERROR_LOGIN,
     LOAD_USER,
-    NOT_LOGGED
+    NOT_LOGGED,
+    FETCHING,
+    UNAUTHORIZED,
+    AUTHORIZED,
+    STORE_TOKEN
 } from '../actions/loginActions';
 
 import {
@@ -26,7 +30,9 @@ export default (
             color: '',
             message: ''
         },
-        blackListTokens: []
+        blackListTokens: [],
+        fetching: true,
+        authorized: false
 
 
         // success: false,
@@ -35,16 +41,50 @@ export default (
 ) => {
     switch (action.type) {
 
+        case STORE_TOKEN:
+            console.log('storetok');
+            
+            return Object.assign({}, state, {
+                isLogged: true
+            }) ;
+
+        case FETCHING:
+
+            return Object.assign({}, state, {
+                fetching: true
+            }) ;
+
+
+        case UNAUTHORIZED:
+
+            return Object.assign({}, state, {
+                fetching: false,
+                isLogged: false
+            }) ;
+
+        case AUTHORIZED:
+
+        console.log('q mierda pasa');
+        
+            return Object.assign({}, state, {
+                fetching: false,
+                isLogged: false,
+                authorized: true
+
+            }) ;
+
 
         case NOT_LOGGED:
 
             return Object.assign({}, state, {
                 isLogged: false,
                 token:'',
+                fetching: false,
                 user:{
                     avatar: 'https://image.flaticon.com/icons/svg/747/747376.svg',
                     name: ''
                 },
+                // fetching: false,
                 blackListTokens:[
                     ...state.blackListTokens,
                     action.payload.token
@@ -101,11 +141,12 @@ export default (
             return Object.assign({}, state, {
                 isLogged: true,
                 token: action.payload.token,
-                alert: {
-                    color: 'primary',
-                    message: 'Login succesful. Welcome...',
-                    visible: true 
-                },
+                // alert: {
+                //     color: 'primary',
+                //     message: 'Login succesful. Welcome...',
+                //     visible: true 
+                // },
+                user: action.payload.user
             })
 
         case ERROR_LOGIN:
