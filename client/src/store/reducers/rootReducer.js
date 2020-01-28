@@ -1,9 +1,10 @@
 import { combineReducers } from "redux";
 import citiesReducer from "./citiesReducer";
+import commentsReducer from './commentsReducer'
 import itinerariesReducer from "./itinerariesReducer";
-import usersReducer from './usersReducer';
 import loginReducer from './loginReducer'
 import registerReducer from './registerReducer'
+import usersReducer from './usersReducer';
 
 
 const rootReducer = combineReducers(
@@ -12,7 +13,8 @@ const rootReducer = combineReducers(
         itinerariesReducer,
         usersReducer,
         loginReducer,
-        registerReducer
+        registerReducer,
+        commentsReducer
 
     }
 );

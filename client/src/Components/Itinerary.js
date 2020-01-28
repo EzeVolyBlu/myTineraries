@@ -99,7 +99,8 @@ class Itinerary extends Component {
     duration,
     price,
     hashtags,
-    activities
+    activities,
+    comments
   } = this.props.itinerary
 
   return (
@@ -174,7 +175,14 @@ class Itinerary extends Component {
 
             </CardBody>
 
-            <Comments />
+
+              {comments.map(comment => {
+                return (
+                  <Comments comment={comment}/>
+                )
+              })}
+
+
 
           </Card>
         </Collapse>
