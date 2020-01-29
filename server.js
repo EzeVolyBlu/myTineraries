@@ -8,6 +8,7 @@ const passport = require ('passport')
 const path = require('path');
 
 
+app.use('/static', express.static(path.join(__dirname, 'client/build')));
 
 
 
