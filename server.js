@@ -7,8 +7,7 @@ require ('./auth/passport');
 const passport = require ('passport')
 
 
-const distDir = __dirname + "/dist/";
-app.use(express.static(distDir));
+
 
 //Middlewares
 const bodyParser = require("body-parser");
