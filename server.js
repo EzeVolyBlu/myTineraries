@@ -35,3 +35,8 @@ app.use('/users', require('./routes/users'));
 mongoose.connect(db, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
   .then(() => console.log('Connection to Mongo DB established'))
   .catch(err => console.log(err));
+
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+    });
